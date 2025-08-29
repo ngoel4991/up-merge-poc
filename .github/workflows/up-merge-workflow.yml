@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Up-Merge 'stage' into 'main'
-        uses: s2504620/up-merge@main
+        uses: bambamboole/gha-upmerge@master
         with:
           base_branch: 'main'
           head_branch: 'stage'
