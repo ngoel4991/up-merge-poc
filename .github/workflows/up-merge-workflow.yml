@@ -1,5 +1,4 @@
 name: Up-Merge Workflow
-
 on:
   push:
     branches:
@@ -9,9 +8,26 @@ jobs:
   up-merge:
     runs-on: ubuntu-latest
     steps:
-      - name: Up-Merge 'stage' into 'main
-        uses: ridedott/up-merge@v3
+      - name: Up-Merge 'stage' into 'main'
+        uses: rinchik/up-merge@v1
         with:
-          github_token: ${{ secrets.UP_MERGE_PAT }}
-          source_branch: 'stage'
-          target_branch: 'main'
+          from_branch: 'stage'
+          to_branch: 'main'
+          token: ${{ secrets.UP_MERGE_PAT }}
+
+# on:
+#   push:
+#     branches:
+#       - 'stage'
+
+# jobs:
+#   up-merge:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Up-Merge 'stage' into 'main
+#         uses: ridedott/up-merge@v3
+#         with:
+#           github_token: ${{ secrets.UP_MERGE_PAT }}
+#           source_branch: 'stage'
+#           target_branch: 'main'
+#           */
