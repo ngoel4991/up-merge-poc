@@ -3,23 +3,43 @@ on:
   push:
     branches:
        - stage
-
+  workflow_dispatch:
 jobs:
-  up-merge:
+  nightly-merge:
 
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Full clone necessary for proper merge
 
-    - name: Up Merge
-      uses: bambamboole/gha-upmerge@master
+    - name: Nightly Merge
+      uses: robotology/gh-action-nightly-merge@v1.5.2
       with:
         stable_branch: 'main'
         development_branch: 'stage'
+        allow_ff: false
       env:
         GITHUB_TOKEN: ${{ secrets.UP_MERGE_PAT }}
+        
+# jobs:
+#   up-merge:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+
+#     - name: Up Merge
+#       uses: bambamboole/gha-upmerge@master
+#       with:
+#         stable_branch: 'main'
+#         development_branch: 'stage'
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.UP_MERGE_PAT }}
 # on:
 #   push:
 #     branches:
