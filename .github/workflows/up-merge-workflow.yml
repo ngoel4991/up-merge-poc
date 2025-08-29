@@ -12,12 +12,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Up Merge
-        uses: bambamboole/gha-upmerge@master
+        uses: robotology/gh-action-nightly-merge@v1.5.2
         with:
-          from_branch: 'stage'
-          to_branch: 'main'
-          user_name: 'GitHub Upmerge Action'
-          user_email: 'actions@github.com'
+          stable_branch: 'stage'
+          development_branch: 'main'
+          allow_ff: false
           push_token: ${{ secrets.PAT_TOKEN }}   # Use PAT here
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
