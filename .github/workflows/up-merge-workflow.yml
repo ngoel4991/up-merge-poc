@@ -1,0 +1,17 @@
+name: Up-Merge Workflow
+
+on:
+  push:
+    branches:
+      - 'stage'
+
+jobs:
+  up-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Up-Merge 'stage' into 'main'
+        uses: s2504620/up-merge@main
+        with:
+          base_branch: 'main'
+          head_branch: 'stage'
+          token: ${{ secrets.UP_MERGE_PAT }}
