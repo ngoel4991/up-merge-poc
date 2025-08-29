@@ -22,7 +22,7 @@ jobs:
         development_branch: 'main'
         allow_ff: false
       env:
-        GITHUB_TOKEN: ${{ secrets.UP_MERGE_PAT }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         
 # jobs:
 #   up-merge:
