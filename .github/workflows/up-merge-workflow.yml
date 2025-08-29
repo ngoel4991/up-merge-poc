@@ -2,20 +2,41 @@ name: Up-Merge Workflow
 on:
   push:
     branches:
-      - 'stage'
+       - stage
 
 jobs:
   up-merge:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Up-Merge 'stage' into 'main'
-        uses: rinchik/up-merge@v1
-        with:
-          from_branch: 'stage'
-          to_branch: 'main'
-          token: ${{ secrets.UP_MERGE_PAT }}
 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Up Merge
+      uses: bambamboole/gha-upmerge@master
+      with:
+        stable_branch: 'main'
+        development_branch: 'stage'
+      env:
+        GITHUB_TOKEN: ${{ secrets.UP_MERGE_PAT }}
 # on:
+#   push:
+#     branches:
+#       - 'stage'
+
+# jobs:
+#   up-merge:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Up-Merge 'stage' into 'main'
+#         uses: rinchik/up-merge@v1
+#         with:
+#           from_branch: 'stage'
+#           to_branch: 'main'
+#           token: ${{ secrets.UP_MERGE_PAT }}
+
+# # on:
 #   push:
 #     branches:
 #       - 'stage'
