@@ -1,0 +1,93 @@
+name: Up-Merge Workflow
+on:
+  push:
+    branches:
+       - stage
+  workflow_dispatch:
+
+jobs:
+  nightly-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Up Merge
+        uses: robotology/gh-action-nightly-merge@v1.5.2
+        with:
+          stable_branch: 'stage'
+          development_branch: 'main'
+          allow_ff: false
+          push_token: 'FOO_TOKEN'    
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          FOO_TOKEN: ${{ secrets.PAT_TOKEN }} # Use PAT here
+
+          
+# jobs:
+#   nightly-merge:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v4
+#       with:
+#         fetch-depth: 0 # Full clone necessary for proper merge
+
+#     - name: Nightly Merge
+#       uses: robotology/gh-action-nightly-merge@v1.5.2
+#       with:
+#         stable_branch: 'stage'
+#         development_branch: 'main'
+#         allow_ff: false
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        
+# jobs:
+#   up-merge:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+
+#     - name: Up Merge
+#       uses: bambamboole/gha-upmerge@master
+#       with:
+#         stable_branch: 'main'
+#         development_branch: 'stage'
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.UP_MERGE_PAT }}
+# on:
+#   push:
+#     branches:
+#       - 'stage'
+
+# jobs:
+#   up-merge:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Up-Merge 'stage' into 'main'
+#         uses: rinchik/up-merge@v1
+#         with:
+#           from_branch: 'stage'
+#           to_branch: 'main'
+#           token: ${{ secrets.UP_MERGE_PAT }}
+
+# # on:
+#   push:
+#     branches:
+#       - 'stage'
+
+# jobs:
+#   up-merge:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Up-Merge 'stage' into 'main
+#         uses: ridedott/up-merge@v3
+#         with:
+#           github_token: ${{ secrets.UP_MERGE_PAT }}
+#           source_branch: 'stage'
+#           target_branch: 'main'
+#           */
