@@ -17,9 +17,12 @@ jobs:
           stable_branch: 'stage'
           development_branch: 'main'
           allow_ff: false
-          push_token: ${{ secrets.PAT_TOKEN }}   # Use PAT here
+          push_token: 'FOO_TOKEN'    
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          FOO_TOKEN: ${{ secrets.PAT_TOKEN }} # Use PAT here
+
+          
 # jobs:
 #   nightly-merge:
 
