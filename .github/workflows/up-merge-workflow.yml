@@ -4,23 +4,51 @@ on:
     branches:
        - stage
   workflow_dispatch:
-
 jobs:
-  nightly-merge:
+  merge-branches:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Up Merge
-        uses: robotology/gh-action-nightly-merge@v1.5.2
+      - name: Checkout target branch (main)
+        uses: actions/checkout@v4
         with:
-          stable_branch: 'stage'
-          development_branch: 'main'
-          allow_ff: false
-          push_token: 'FOO_TOKEN'    
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          FOO_TOKEN: ${{ secrets.PAT_TOKEN }} # Use PAT here
+          ref: main
+          persist-credentials: false
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch all branches
+        run: git fetch origin
+
+      - name: Merge stage into main
+        run: |
+          git merge origin/stage --no-ff --no-edit --allow-unrelated-histories || true
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+#This worked fine , but allow unrelated history error
+# jobs:
+#   nightly-merge:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Up Merge
+#         uses: robotology/gh-action-nightly-merge@v1.5.2
+#         with:
+#           stable_branch: 'stage'
+#           development_branch: 'main'
+#           allow_ff: false
+#           push_token: 'FOO_TOKEN'    
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+#           FOO_TOKEN: ${{ secrets.PAT_TOKEN }} # Use PAT here
 
           
 # jobs:
