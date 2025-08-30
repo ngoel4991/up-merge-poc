@@ -1,4 +1,4 @@
-name: Up-Merge Workflow
+name: Up-Merge Workflow Updated
 on:
   push:
     branches:
@@ -30,8 +30,9 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@v0.8.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT_TOKEN }}
           branch: main
+          
 #This worked fine , but allow unrelated history error
 # jobs:
 #   nightly-merge:
