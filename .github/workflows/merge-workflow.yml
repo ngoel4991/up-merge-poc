@@ -26,6 +26,11 @@ jobs:
           branch: 'auto-merge-stage'
           base: 'main'
           delete-branch: true
+          
+      - name: Auto-approve Pull Request
+        uses: hmarr/auto-approve-action@v3
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
 
       - name: Auto-merge the Pull Request
         if: ${{ steps.create_pr.outputs.pull-request-number }}
