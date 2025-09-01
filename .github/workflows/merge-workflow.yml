@@ -4,10 +4,11 @@ on:
     branches:
        - stage
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   merge-branches:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout target branch (main)
         uses: actions/checkout@v4
