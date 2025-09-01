@@ -4,45 +4,50 @@ on:
   push:
     branches:
       - stage
+
 permissions:
-   contents: write
+  contents: write
+
 jobs:
   create-pr-and-merge:
     runs-on: ubuntu-latest
     steps:
+      # 1️⃣ Checkout stage branch
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: 'stage'
+          ref: stage
 
-      - name: Create Pull Request from stage to main
+      # 2️⃣ Create Pull Request from stage to main
+      - name: Create Pull Request
         id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          title: 'Automated Merge from stage to main'
-          commit-message: 'Automated merge from stage'
-          branch: 'auto-merge-stage'
-          base: 'main'
+          commit-message: "Automated merge from stage"
+          branch: auto-merge-stage
+          base: main
+          title: "Automated Merge from stage to main"
           delete-branch: true
-          
+          push-branch: true   # ensures branch is pushed if not already
+
+      # 3️⃣ Auto-approve the PR (only if created)
       - name: Auto-approve Pull Request
+        if: ${{ steps.create_pr.outputs.pull-request-number != '' }}
         uses: hmarr/auto-approve-action@v3
         with:
           github-token: ${{ secrets.PAT_TOKEN }}
 
+      # 4️⃣ Auto-merge the PR (only if created)
       - name: Auto-merge the Pull Request
-        if: ${{ steps.create_pr.outputs.pull-request-number }}
+        if: ${{ steps.create_pr.outputs.pull-request-number != '' }}
         uses: pascalgn/automerge-action@v0.16.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         with:
           pull-request: ${{ steps.create_pr.outputs.pull-request-number }}
           merge-method: merge
-
-
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
 
 # name: Merge Workflow
