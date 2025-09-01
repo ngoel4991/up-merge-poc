@@ -12,12 +12,16 @@ jobs:
       REPO: ${{ github.repository }}
       PAT: ${{ secrets.PAT_TOKEN }}
     steps:
-      # 1️⃣ Checkout stage branch
-      - name: Checkout repository
+      - name: Checkout stage branch
         uses: actions/checkout@v4
         with:
-           fetch-depth: 0
-           ref: stage
+          fetch-depth: 0
+          ref: stage
+
+      - name: Configure Git user
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
 
       # 2️⃣ Create temporary branch for merge
       - name: Create merge branch
