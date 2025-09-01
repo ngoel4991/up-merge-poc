@@ -13,13 +13,11 @@ jobs:
       PAT: ${{ secrets.PAT_TOKEN }}
     steps:
       # 1️⃣ Checkout stage branch
-      - name: Checkout stage
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git fetch origin
-          git checkout stage
-          git pull origin stage
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+           fetch-depth: 0
+           ref: stage
 
       # 2️⃣ Create temporary branch for merge
       - name: Create merge branch
