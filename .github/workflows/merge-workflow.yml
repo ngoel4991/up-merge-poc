@@ -28,7 +28,7 @@ jobs:
         run: |
           MERGE_BRANCH="auto-merge-stage-$(date +%s)"
           git checkout -b $MERGE_BRANCH
-          git push https://$PAT@github.com/$REPO.git $MERGE_BRANCH
+          git push https://$PAT@github.com/$REPO.git $MERGE_BRANCH 
           echo "MERGE_BRANCH=$MERGE_BRANCH" >> $GITHUB_ENV
 
       # 3️⃣ Merge latest main into the branch
@@ -84,7 +84,6 @@ jobs:
 
 
 
-
 # name: Merge Stage to Main
 
 # on:
@@ -135,7 +134,6 @@ jobs:
 #           merge-method: merge
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-
 
 # name: Merge Workflow
 # on:
