@@ -35,7 +35,7 @@ jobs:
       - name: Merge latest main
         run: |
           git fetch origin main
-          git merge origin/main -m "Merge latest main into $MERGE_BRANCH"
+          git merge origin/main -m "Merge latest main into $MERGE_BRANCH" -X theirs
         continue-on-error: true   # workflow will continue even if merge conflicts occur
 
       # 4️⃣ Push updated branch (if merge was successful)
